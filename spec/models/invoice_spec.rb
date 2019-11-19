@@ -9,15 +9,18 @@ describe Invoice do
     it { should belong_to :customer }
     it { should belong_to :merchant }
     it { should have_many :transactions }
+    it { should have_many :invoice_items }
   end
 
   describe 'attributes' do
-    merchant = Merchant.create(name: 'ToysRUs')
-    customer = Customer.create(first_name: 'Sonny', last_name: 'Moore')
+    it 'has attributes' do
+      merchant = Merchant.create(name: 'ToysRUs')
+      customer = Customer.create(first_name: 'Sonny', last_name: 'Moore')
 
-    invoice = customer.invoices.create(merchant: merchant, status: 'shipped')
-    expect(invoice.customer.first_name).to eq('Sonny')
-    expect(invoice.merchant.name).to eq('ToysRUs')
-    expect(invoice.status).to eq('shipped')
+      invoice = customer.invoices.create(merchant: merchant, status: 'shipped')
+      expect(invoice.customer.first_name).to eq('Sonny')
+      expect(invoice.merchant.name).to eq('ToysRUs')
+      expect(invoice.status).to eq('shipped')
+    end
   end
 end

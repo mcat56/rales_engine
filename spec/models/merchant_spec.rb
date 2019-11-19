@@ -11,8 +11,10 @@ describe Merchant do
   end
 
   describe 'attributes' do
-    merchant = Merchant.create(name: 'ToysRUs')
+    it 'has attributes' do
+      merchant = Merchant.create(name: 'ToysRUs')
 
-    expect(merchant.name).to eq('ToysRUs')
+      expect(merchant.name).to eq('ToysRUs')
+    end 
   end
 end

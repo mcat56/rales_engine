@@ -11,9 +11,11 @@ describe Customer do
   end
 
   describe 'attributes' do
-    customer = Customer.create(first_name: 'Sonny', last_name: 'Moore')
+    it 'has attributes' do
+      customer = Customer.create(first_name: 'Sonny', last_name: 'Moore')
 
-    expect(customer.first_name).to eq('Sonny')
-    expect(customer.last_name).to eq('Moore')
+      expect(customer.first_name).to eq('Sonny')
+      expect(customer.last_name).to eq('Moore')
+    end 
   end
 end
