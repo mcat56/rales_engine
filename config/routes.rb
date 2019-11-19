@@ -5,8 +5,10 @@ Rails.application.routes.draw do
       get '/customers/random', to: 'customers#random'
       get '/customers/find_all', to: 'customers#find_all'
       get '/customers/find', to: 'customers#find'
-      resources :customers, only: [:index, :show]
-
+      resources :customers, only: [:index, :show] do
+        resources :invoices, only: [:index], module: :customers
+        resources :transactions, only: [:index], module: :customers
+      end
     end
   end
 end

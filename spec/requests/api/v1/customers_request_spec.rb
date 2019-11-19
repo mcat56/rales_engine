@@ -97,4 +97,40 @@ describe 'Items API' do
     customer_response = JSON.parse(response.body)
     expect(customer_response["data"]["attributes"]["first_name"]).to eq('Lucy')
   end
+
+  it 'can get a customers invoices' do
+    customer = create(:customer)
+    merchant = create(:merchant)
+    invoice_1 = customer.invoices.create(merchant: merchant, status: 'shipped')
+    invoice_2 = customer.invoices.create(merchant: merchant, status: 'shipped')
+    invoice_3 = customer.invoices.create(merchant: merchant, status: 'shipped')
+    invoice_4 = customer.invoices.create(merchant: merchant, status: 'shipped')
+
+    get "/api/v1/customers/#{customer.id}/invoices"
+
+    invoices = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(invoices["data"].length).to eq(4)
+  end
+
+  it 'can get a customers transactions' do
+    customer = create(:customer)
+    merchant = create(:merchant)
+    invoice_1 = customer.invoices.create(merchant: merchant, status: 'shipped')
+    invoice_2 = customer.invoices.create(merchant: merchant, status: 'shipped')
+    invoice_3 = customer.invoices.create(merchant: merchant, status: 'shipped')
+
+    transaction_1 = invoice_1.transactions.create(credit_card_number: 4654405418249632, result: 'success')
+    transaction_1 = invoice_2.transactions.create(credit_card_number: 4515551623735607, result: 'success')
+    transaction_1 = invoice_3.transactions.create(credit_card_number: 4923661117104166, result: 'success')
+
+    get "/api/v1/customers/#{customer.id}/transactions"
+
+    transactions = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(transactions["data"].length).to eq(3)
+    expect(transactions["data"].first["attributes"]["last_four"]).to eq(9632)
+  end
 end
