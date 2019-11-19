@@ -38,6 +38,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
   gem 'launchy'
+  gem 'postgres-copy'
   gem 'simplecov'
   gem 'launchy'
   gem 'postgres-copy'
