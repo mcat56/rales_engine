@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# do sad paths / find / find_all errors
 describe 'Items API' do
   it 'sends a list of customers' do
     create_list(:customer, 3)
@@ -51,6 +51,50 @@ describe 'Items API' do
   end
 
   it 'can find all items by any parameter' do
+    customer_1 = Customer.create(first_name: 'Lucy', last_name: 'Ripley')
+    customer_2 = Customer.create(first_name: 'Lucy', last_name: 'Ripley')
+    customer_3 = Customer.create(first_name: 'Lucy', last_name: 'Ripley')
 
+    customers = Customer.all
+
+    get "/api/v1/customers/find_all?first_name=#{customer_1.first_name}"
+
+    customer_response = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(customer_response["data"].length).to eq(3)
+    expect(customer_response["data"].first["id"]).to eq("#{customer_1.id}")
+    expect(customer_response["data"][1]["id"]).to eq("#{customer_2.id}")
+    expect(customer_response["data"][2]["id"]).to eq("#{customer_3.id}")
+
+
+    get "/api/v1/customers/find_all?last_name=#{customer_1.last_name}"
+
+    customer_response = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(customer_response["data"].length).to eq(3)
+    expect(customer_response["data"].first["id"]).to eq("#{customer_1.id}")
+    expect(customer_response["data"][1]["id"]).to eq("#{customer_2.id}")
+    expect(customer_response["data"][2]["id"]).to eq("#{customer_3.id}")
+
+
+    get "/api/v1/customers/find_all?id=#{customer_1.id}"
+
+    customer_response = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(customer_response["data"]).to be_a(Array)
+  end
+
+  it 'can select a random customer' do
+    customer = Customer.create(first_name: 'Lucy', last_name: 'Ripley')
+
+    get '/api/v1/customers/random'
+
+    expect(response).to be_successful
+
+    customer_response = JSON.parse(response.body)
+    expect(customer_response["data"]["attributes"]["first_name"]).to eq('Lucy')
   end
 end

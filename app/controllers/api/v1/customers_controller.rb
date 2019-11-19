@@ -17,4 +17,16 @@ class Api::V1::CustomersController < ApplicationController
     serialized = CustomerSerializer.new(customer)
     render json: serialized
   end
+
+  def find_all
+    customers = Customer.having("#{params.keys.first} = '#{params.values.first}'").group(:id)
+    serialized = CustomerSerializer.new(customers)
+    render json: serialized
+  end
+
+  def random
+    customer = Customer.order('RANDOM()').first
+    serialized = CustomerSerializer.new(customer)
+    render json: serialized
+  end
 end
