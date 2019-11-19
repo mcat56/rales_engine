@@ -15,7 +15,9 @@ gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 
-gem 'postgres-copy'
+# gem 'postgres-copy'
+
+gem 'fast_jsonapi'
 
 gem 'activerecord-import'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -38,6 +40,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
   gem 'launchy'
+  gem 'faker'
   gem 'postgres-copy'
   gem 'simplecov'
   gem 'launchy'
