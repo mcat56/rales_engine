@@ -14,6 +14,10 @@ gem 'rspec-rails'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+
+gem 'postgres-copy'
+
+gem 'activerecord-import'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -34,9 +38,10 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
   gem 'launchy'
+  gem 'postgres-copy'
   gem 'simplecov'
   gem 'launchy'
-
+  gem 'postgres-copy'
 end
 
 group :development do
