@@ -141,15 +141,17 @@ describe 'Items API' do
     merchant_3 = create(:merchant)
     invoice_1 = customer.invoices.create(merchant: merchant_1, status: 'shipped')
     invoice_2 = customer.invoices.create(merchant: merchant_1, status: 'shipped')
-    invoice_3 = customer.invoices.create(merchant: merchant_2, status: 'shipped')
-    invoice_4 = customer.invoices.create(merchant: merchant_3, status: 'shipped')
+    invoice_3 = customer.invoices.create(merchant: merchant_1, status: 'shipped')
+    invoice_4 = customer.invoices.create(merchant: merchant_2, status: 'shipped')
     invoice_5 = customer.invoices.create(merchant: merchant_3, status: 'shipped')
+    invoice_6 = customer.invoices.create(merchant: merchant_3, status: 'shipped')
 
     transaction_1 = invoice_1.transactions.create(credit_card_number: 4654405418249632, result: 'success')
     transaction_2 = invoice_2.transactions.create(credit_card_number: 4515551623735607, result: 'failure')
-    transaction_3 = invoice_3.transactions.create(credit_card_number: 4923661117104166, result: 'success')
-    transaction_4 = invoice_4.transactions.create(credit_card_number: 4003216997806204, result: 'success')
-    transaction_5 = invoice_5.transactions.create(credit_card_number: 4339360234330200, result: 'success')
+    transaction_3 = invoice_3.transactions.create(credit_card_number: 4515551623735607, result: 'failure')
+    transaction_4 = invoice_4.transactions.create(credit_card_number: 4923661117104166, result: 'success')
+    transaction_5 = invoice_5.transactions.create(credit_card_number: 4003216997806204, result: 'success')
+    transaction_6 = invoice_6.transactions.create(credit_card_number: 4339360234330200, result: 'success')
 
     get "/api/v1/customers/#{customer.id}/favorite_merchant"
 
