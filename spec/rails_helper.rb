@@ -4,6 +4,7 @@ SimpleCov.start
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 
+
 require File.expand_path('../config/environment', __dir__)
 
 # Prevent database truncation if the environment is production
@@ -44,7 +45,10 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.include FactoryBot::Syntax::Methods
-  
+
+  # require 'support/factory_bot'
+  Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.

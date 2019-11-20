@@ -8,6 +8,7 @@ describe Customer do
 
   describe 'relationships' do
     it { should have_many :invoices }
+    it { should have_many(:transactions).through(:invoices)}
   end
 
   describe 'attributes' do
@@ -16,6 +17,6 @@ describe Customer do
 
       expect(customer.first_name).to eq('Sonny')
       expect(customer.last_name).to eq('Moore')
-    end 
+    end
   end
 end
