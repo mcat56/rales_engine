@@ -122,8 +122,8 @@ describe 'Items API' do
     invoice_3 = customer.invoices.create(merchant: merchant, status: 'shipped')
 
     transaction_1 = invoice_1.transactions.create(credit_card_number: 4654405418249632, result: 'success')
-    transaction_1 = invoice_2.transactions.create(credit_card_number: 4515551623735607, result: 'success')
-    transaction_1 = invoice_3.transactions.create(credit_card_number: 4923661117104166, result: 'success')
+    transaction_2 = invoice_2.transactions.create(credit_card_number: 4515551623735607, result: 'success')
+    transaction_3 = invoice_3.transactions.create(credit_card_number: 4923661117104166, result: 'success')
 
     get "/api/v1/customers/#{customer.id}/transactions"
 
@@ -132,5 +132,30 @@ describe 'Items API' do
     expect(response).to be_successful
     expect(transactions["data"].length).to eq(3)
     expect(transactions["data"].first["attributes"]["last_four"]).to eq(9632)
+  end
+
+  it 'can get a customers favorite merchant' do
+    customer = create(:customer)
+    merchant_1 = create(:merchant)
+    merchant_2 = create(:merchant)
+    merchant_3 = create(:merchant)
+    invoice_1 = customer.invoices.create(merchant: merchant_1, status: 'shipped')
+    invoice_2 = customer.invoices.create(merchant: merchant_1, status: 'shipped')
+    invoice_3 = customer.invoices.create(merchant: merchant_2, status: 'shipped')
+    invoice_4 = customer.invoices.create(merchant: merchant_3, status: 'shipped')
+    invoice_5 = customer.invoices.create(merchant: merchant_3, status: 'shipped')
+
+    transaction_1 = invoice_1.transactions.create(credit_card_number: 4654405418249632, result: 'success')
+    transaction_2 = invoice_2.transactions.create(credit_card_number: 4515551623735607, result: 'failure')
+    transaction_3 = invoice_3.transactions.create(credit_card_number: 4923661117104166, result: 'success')
+    transaction_4 = invoice_4.transactions.create(credit_card_number: 4003216997806204, result: 'success')
+    transaction_5 = invoice_5.transactions.create(credit_card_number: 4339360234330200, result: 'success')
+
+    get "/api/v1/customers/#{customer.id}/favorite_merchant"
+
+    favorite_merchant = JSON.parse(response.body)
+    expect(response).to be_successful
+    expect(favorite_merchant["data"]["attributes"]["name"]).to eq("#{merchant_3.name}")
+
   end
 end

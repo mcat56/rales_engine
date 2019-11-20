@@ -29,4 +29,11 @@ class Api::V1::CustomersController < ApplicationController
     serialized = CustomerSerializer.new(customer)
     render json: serialized
   end
+
+  def favorite_merchant
+    customer = Customer.find(params[:id])
+    fav = Merchant.find((customer.favorite_merchant)[:id])
+    serialized = MerchantSerializer.new(fav)
+    render json: serialized
+  end
 end
