@@ -115,41 +115,38 @@ describe 'Items API' do
     expect(merchant["data"]["attributes"]["name"]).to eq('Thai Tanic')
   end
 
-  # it 'can get a merchants invoices' do
-  #   merchant = create(:merchant)
-  #   merchant = create(:merchant)
-  #   invoice_1 = merchant.invoices.create(merchant: merchant, status: 'shipped')
-  #   invoice_2 = merchant.invoices.create(merchant: merchant, status: 'shipped')
-  #   invoice_3 = merchant.invoices.create(merchant: merchant, status: 'shipped')
-  #   invoice_4 = merchant.invoices.create(merchant: merchant, status: 'shipped')
-  #
-  #   get "/api/v1/merchants/#{merchant.id}/invoices"
-  #
-  #   invoices = JSON.parse(response.body)
-  #
-  #   expect(response).to be_successful
-  #   expect(invoices["data"].length).to eq(4)
-  # end
+  it 'can get a merchants invoices' do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    invoice_1 = merchant.invoices.create(customer: customer, status: 'shipped')
+    invoice_2 = merchant.invoices.create(customer: customer, status: 'shipped')
+    invoice_3 = merchant.invoices.create(customer: customer, status: 'shipped')
+    invoice_4 = merchant.invoices.create(customer: customer, status: 'shipped')
 
-  # it 'can get a merchants transactions' do
-  #   merchant = create(:merchant)
-  #   merchant = create(:merchant)
-  #   invoice_1 = merchant.invoices.create(merchant: merchant, status: 'shipped')
-  #   invoice_2 = merchant.invoices.create(merchant: merchant, status: 'shipped')
-  #   invoice_3 = merchant.invoices.create(merchant: merchant, status: 'shipped')
-  #
-  #   transaction_1 = invoice_1.transactions.create(credit_card_number: 4654405418249632, result: 'success')
-  #   transaction_2 = invoice_2.transactions.create(credit_card_number: 4515551623735607, result: 'success')
-  #   transaction_3 = invoice_3.transactions.create(credit_card_number: 4923661117104166, result: 'success')
-  #
-  #   get "/api/v1/merchants/#{merchant.id}/transactions"
-  #
-  #   transactions = JSON.parse(response.body)
-  #
-  #   expect(response).to be_successful
-  #   expect(transactions["data"].length).to eq(3)
-  #   expect(transactions["data"].first["attributes"]["last_four"]).to eq(9632)
-  # end
+    get "/api/v1/merchants/#{merchant.id}/invoices"
+
+    invoices = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(invoices["data"].length).to eq(4)
+  end
+
+  it 'can get a merchants items' do
+    merchant = create(:merchant)
+    item_1 = merchant.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: 1200)
+    item_2 = merchant.items.create(name: 'Barbie', description: 'Basic', unit_price: 2000)
+    item_3 = merchant.items.create(name: 'Scooter', description: 'Vroom', unit_price: 3500)
+
+    get "/api/v1/merchants/#{merchant.id}/items"
+
+    items = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(items["data"].length).to eq(3)
+    expect(items["data"].first["attributes"]["name"]).to eq('Teddy Bear')
+    expect(items["data"].first["attributes"]["description"]).to eq('Fluffy')
+    expect(items["data"].first["attributes"]["unit_price"]).to eq(12.00)
+  end
   #
   # it 'can get a merchants favorite merchant' do
   #   merchant = create(:merchant)
