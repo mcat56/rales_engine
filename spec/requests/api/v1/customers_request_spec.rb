@@ -12,7 +12,7 @@ describe 'Items API' do
     expect(customers["data"].length).to eq(3)
   end
 
-  it 'can get one item by its id' do
+  it 'can get show a customer' do
     id = create(:customer).id
 
     get "/api/v1/customers/#{id}"
@@ -23,34 +23,52 @@ describe 'Items API' do
     expect(customer["data"]["id"].to_i).to eq(id)
   end
 
-  it 'can find an item by any parameter' do
-    create_list(:customer, 3)
+  it 'can find a customer by any parameter' do
+    customer_1 = Customer.create(first_name: 'Sonny', last_name: 'Moore', created_at: "2012-03-27 14:53:59 UTC", updated_at: "2012-03-27 14:53:59 UTC" )
+    customer_2 = Customer.create(first_name: 'Alice', last_name: 'Wonderland', created_at: "2014-03-27 14:53:59 UTC", updated_at: "2014-03-27 14:53:59 UTC" )
+    customer_3 = Customer.create(first_name: 'Huckleberry', last_name: 'Finn', created_at: "2016-03-27 14:53:59 UTC", updated_at: "2016-03-27 14:53:59 UTC" )
 
-    customer = Customer.last
-
-    get "/api/v1/customers/find?first_name=#{customer.first_name}"
-
-    customer_response = JSON.parse(response.body)
-
-    expect(response).to be_successful
-    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer.first_name}")
-
-    get "/api/v1/customers/find?last_name=#{customer.last_name}"
+    #find by first_name
+    get "/api/v1/customers/find?first_name=#{customer_1.first_name}"
 
     customer_response = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer.first_name}")
+    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_1.first_name}")
 
-    get "/api/v1/customers/find?id=#{customer.id}"
+    #find by last_name
+    get "/api/v1/customers/find?last_name=#{customer_2.last_name}"
 
     customer_response = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer.first_name}")
+    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_2.first_name}")
+
+    #find by id
+    get "/api/v1/customers/find?id=#{customer_3.id}"
+
+    customer_response = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_3.first_name}")
+
+    #find by created_at
+    get "/api/v1/customers/find?created_at=#{customer_1.created_at}"
+
+    customer_response = JSON.parse(response.body)
+    expect(response).to be_successful
+    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_1.first_name}")
+
+    #find by updated_at
+    get "/api/v1/customers/find?updated_at=#{customer_2.updated_at}"
+
+    customer_response = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_2.first_name}")
   end
 
-  it 'can find all items by any parameter' do
+  it 'can find all customers by any parameter' do
     customer_1 = Customer.create(first_name: 'Lucy', last_name: 'Ripley')
     customer_2 = Customer.create(first_name: 'Lucy', last_name: 'Ripley')
     customer_3 = Customer.create(first_name: 'Lucy', last_name: 'Ripley')
