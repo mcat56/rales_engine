@@ -17,9 +17,9 @@ describe Transaction do
       invoice = customer.invoices.create(merchant: merchant, status: 'shipped')
 
 
-      transaction = invoice.transactions.create(credit_card_number: 4654405418249632, result: 'success')
-      expect(transaction.credit_card_number).to eq(4654405418249632)
+      transaction = invoice.transactions.create(credit_card_number: '4654405418249632', result: 'success')
+      expect(transaction.credit_card_number).to eq('4654405418249632')
       expect(transaction.result).to eq('success')
-    end 
+    end
   end
 end

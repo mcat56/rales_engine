@@ -8,6 +8,7 @@ describe Merchant do
   describe 'relationships' do
     it { should have_many :items }
     it { should have_many :invoices }
+    it { should have_many(:invoice_items).through(:invoices) }
   end
 
   describe 'attributes' do
@@ -15,6 +16,6 @@ describe Merchant do
       merchant = Merchant.create(name: 'ToysRUs')
 
       expect(merchant.name).to eq('ToysRUs')
-    end 
+    end
   end
 end
