@@ -119,14 +119,14 @@ describe 'Items API' do
   end
 
   it 'can select a random item' do
-    merchant = Merchant.create!(name: 'ToyRUs')
-    item_1 = merchant.items.create!(name: 'Teddy Bear', description: 'Fluffy', unit_price: 1500, created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
-    item_2 = merchant.items.create!(name: 'Scooter', description: 'Vroom', unit_price: 2300, created_at: "2014-03-29 14:53:59 UTC", updated_at: "2014-03-29 14:53:59 UTC" )
-    item_3 = merchant.items.create!(name: 'Bowl', description: 'Round', unit_price: 1000, created_at: "2016-03-29 14:53:59 UTC", updated_at: "2016-03-29 14:53:59 UTC" )
-    merchant_2 = Merchant.create!(name: 'King Soopers')
-    item_4 = merchant.items.create!(name: 'Banana', description: 'Yellow', unit_price: 200, created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
-    item_5 = merchant.items.create!(name: 'Rice', description: 'Brown', unit_price: 300, created_at: "2014-03-29 14:53:59 UTC", updated_at: "2014-03-29 14:53:59 UTC" )
-    item_6 = merchant.items.create!(name: 'Pumpkin', description: 'Squash', unit_price: 400, created_at: "2016-03-29 14:53:59 UTC", updated_at: "2016-03-29 14:53:59 UTC" )
+    merchant = Merchant.create(name: 'ToyRUs')
+    item_1 = merchant.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: 1500, created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    item_2 = merchant.items.create(name: 'Scooter', description: 'Vroom', unit_price: 2300, created_at: "2014-03-29 14:53:59 UTC", updated_at: "2014-03-29 14:53:59 UTC" )
+    item_3 = merchant.items.create(name: 'Bowl', description: 'Round', unit_price: 1000, created_at: "2016-03-29 14:53:59 UTC", updated_at: "2016-03-29 14:53:59 UTC" )
+    merchant_2 = Merchant.create(name: 'King Soopers')
+    item_4 = merchant.items.create(name: 'Banana', description: 'Yellow', unit_price: 200, created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    item_5 = merchant.items.create(name: 'Rice', description: 'Brown', unit_price: 300, created_at: "2014-03-29 14:53:59 UTC", updated_at: "2014-03-29 14:53:59 UTC" )
+    item_6 = merchant.items.create(name: 'Pumpkin', description: 'Squash', unit_price: 400, created_at: "2016-03-29 14:53:59 UTC", updated_at: "2016-03-29 14:53:59 UTC" )
 
     get '/api/v1/items/random'
 
@@ -136,22 +136,31 @@ describe 'Items API' do
     expect(items).to include(item["data"]["id"].to_i)
   end
 
-  # it 'can get a items invoices' do
-  #   item = create(:item)
-  #   customer = create(:customer)
-  #   invoice_1 = item.invoices.create(customer: customer, status: 'shipped')
-  #   invoice_2 = item.invoices.create(customer: customer, status: 'shipped')
-  #   invoice_3 = item.invoices.create(customer: customer, status: 'shipped')
-  #   invoice_4 = item.invoices.create(customer: customer, status: 'shipped')
-  #
-  #   get "/api/v1/items/#{item.id}/invoices"
-  #
-  #   invoices = JSON.parse(response.body)
-  #
-  #   expect(response).to be_successful
-  #   expect(invoices["data"].length).to eq(4)
-  # end
-  #
+  it 'can get an items invoice_items' do
+    merchant = Merchant.create(name: 'ToysRUs')
+    item = merchant.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: 1500, created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    customer = create(:customer)
+    invoice_1 = merchant.invoices.create(customer: customer, status: 'shipped')
+    invoice_2 = merchant.invoices.create(customer: customer, status: 'shipped')
+    invoice_3 = merchant.invoices.create(customer: customer, status: 'shipped')
+    invoice_4 = merchant.invoices.create(customer: customer, status: 'shipped')
+    invoice_item_1 = invoice_1.invoice_items.create(item: item, quantity: 1, unit_price: 1200, created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    invoice_item_2 = invoice_2.invoice_items.create(item: item, quantity: 3, unit_price: 1200, created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    invoice_item_3 = invoice_3.invoice_items.create(item: item, quantity: 2, unit_price: 1200, created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    invoice_item_4 = invoice_4.invoice_items.create(item: item, quantity: 5, unit_price: 1200, created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+
+
+    get "/api/v1/items/#{item.id}/invoice_items"
+
+    invoices = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(invoices["data"].length).to eq(4)
+    expect(invoices["data"].first["attributes"]["quantity"]).to eq(1)
+    expect(invoices["data"].first["attributes"]["unit_price"]).to eq(12.00)
+  end
+
   # it 'can get a items items' do
   #   item = create(:item)
   #   item_1 = item.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: 1200)
