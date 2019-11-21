@@ -73,6 +73,13 @@ describe 'Items API' do
     expect(response).to be_successful
     expect(item_response["data"]["attributes"]["name"]).to eq("#{item_1.name}")
 
+    #find by merchant_id
+    get "/api/v1/items/find?#{merchant.id}"
+
+    expect(response).to be_successful
+    item_response = JSON.parse(response.body)
+    expect(item_response["data"]["id"]).to eq("#{item_1.id}")
+
     #find by created_at
     get "/api/v1/items/find?created_at=#{item_2.created_at}"
 
