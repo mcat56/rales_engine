@@ -10,6 +10,8 @@ Rails.application.routes.draw do
         resources :invoices, only: [:index], module: :customers
         resources :transactions, only: [:index], module: :customers
       end
+      get '/merchants/:id/favorite_customer', to: 'merchants#favorite_customer'
+      get '/merchants/revenue', to: 'merchants#revenue_by_date'
       get '/merchants/most_revenue', to: 'merchants#top_merchants'
       get '/merchants/random', to: 'merchants#random'
       get '/merchants/find_all', to: 'merchants#find_all'

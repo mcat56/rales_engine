@@ -13,13 +13,13 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def find
-    merchant = Merchant.where("#{params.keys.first} = '#{params.values.first.gsub(/'/, '%27')}'").first
+    merchant = Merchant.where(merchant_params).first
     serialized = MerchantSerializer.new(merchant)
     render json: serialized
   end
 
   def find_all
-    merchants = Merchant.having("#{params.keys.first} = '#{params.values.first.gsub(/'/, '%27')}'").group(:id)
+    merchants = Merchant.having(merchant_params).group(:id).order(:id)
     serialized = MerchantSerializer.new(merchants)
     render json: serialized
   end
@@ -36,10 +36,34 @@ class Api::V1::MerchantsController < ApplicationController
     render json: serialized
   end
 
+  def revenue_by_date
+    revenue = Merchant.revenue_by_date(params[:date])
+    revenue_hash = { data: { attributes: { total_revenue: to_currency(revenue)} } }
+    render json: revenue_hash
+  end
+
+  def favorite_customer
+    merchant = Merchant.find(params[:id])
+    fav_customer = merchant.favorite_customer
+    serialized = CustomerSerializer.new(fav_customer)
+    render json: serialized
+  end
+
   private
 
   def merchant_params
-    params.require(:merchant).permit(:id, :name, :created_at, :updated_at)
+    if params['name']
+      params['name'].gsub(/'/, '%27')
+    end
+    params.permit(:id, :name, :updated_at, :created_at)
   end
+
+  def to_currency(revenue)
+    ('%.2f' % (revenue * 0.01))
+  end
+
+
+
+
 
 end
