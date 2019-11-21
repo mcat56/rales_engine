@@ -1,6 +1,6 @@
 require 'rails_helper'
 # do sad paths / find / find_all errors
-describe 'Items API' do
+describe 'Merchants API' do
   it 'sends a list of merchants' do
     create_list(:merchant, 3)
 
@@ -61,7 +61,7 @@ describe 'Items API' do
     expect(merchant["data"]["attributes"]["name"]).to eq("#{merchant_3.name}")
   end
 
-  it 'can find all items by any parameter' do
+  it 'can find all merchants by any parameter' do
     merchant_1 = Merchant.create(name: 'Thai Tanic', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC")
     merchant_2 = Merchant.create(name: 'Thai Tanic', created_at: "2014-03-29 14:53:59 UTC", updated_at: "2014-03-29 14:53:59 UTC")
     merchant_3 = Merchant.create(name: 'Thai Tanic', created_at: "2016-03-29 14:53:59 UTC", updated_at: "2016-03-29 14:53:59 UTC")
@@ -255,7 +255,4 @@ describe 'Items API' do
     customer = JSON.parse(response.body)
     expect(customer["data"]["attributes"]["first_name"]).to eq("#{customer_1.first_name}")
   end
-
-
-
 end

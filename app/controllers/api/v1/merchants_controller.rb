@@ -62,8 +62,4 @@ class Api::V1::MerchantsController < ApplicationController
     ('%.2f' % (revenue * 0.01))
   end
 
-
-
-
-
 end

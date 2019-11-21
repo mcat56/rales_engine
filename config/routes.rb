@@ -20,6 +20,10 @@ Rails.application.routes.draw do
         resources :invoices, only: [:index], module: :merchants
         resources :items, only: [:index], module: :merchants
       end
+      get '/items/find', to: 'items#find'
+      get '/items/find_all', to: 'items#find_all'
+      get '/items/random', to: 'items#random'
+      resources :items, only: [:index, :show]
     end
   end
 end
