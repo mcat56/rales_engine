@@ -36,7 +36,7 @@ class Api::V1::ItemsController < ApplicationController
   def item_params
     if params['name']
       params['name'].gsub(/'/, '%27')
-    end
+    end 
     params.permit(:id, :name, :description, :unit_price, :updated_at, :created_at)
   end
 

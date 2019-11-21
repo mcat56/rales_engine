@@ -27,6 +27,9 @@ namespace :import do |import|
     CSV.foreach('data/items.csv', headers: true ) do |row|
       items << Item.new(row.to_h)
     end
+    items.each do |item|
+      item.unit_price =  (item.unit_price * 0.01)
+    end
     Item.import items, recursive: true
 
     invoices = []
@@ -38,6 +41,9 @@ namespace :import do |import|
     invoice_items = []
     CSV.foreach('data/invoice_items.csv', headers: true ) do |row|
       invoice_items << InvoiceItem.new(row.to_h)
+    end
+    invoice_items.each do |invoice_item|
+      invoice_item.unit_price =  ( '%.2f' % (invoice_item.unit_price * 0.01))
     end
     InvoiceItem.import invoice_items, recursive: true
 

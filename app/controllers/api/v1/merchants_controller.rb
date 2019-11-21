@@ -59,7 +59,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def to_currency(revenue)
-    ('%.2f' % (revenue * 0.01))
+    ('%.2f' % revenue)
   end
 
 end

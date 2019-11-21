@@ -16,11 +16,11 @@ describe Item do
   describe 'attributes' do
     it 'has attributes' do
       merchant = Merchant.create(name: 'ToysRUs')
-      item = merchant.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: 1200)
+      item = merchant.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: '12.00')
 
       expect(item.name).to eq('Teddy Bear')
       expect(item.description).to eq('Fluffy')
-      expect(item.unit_price).to eq(1200)
+      expect(item.unit_price).to eq(12.0)
     end
   end
 end
