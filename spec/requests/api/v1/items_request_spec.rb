@@ -161,20 +161,14 @@ describe 'Items API' do
     expect(invoices["data"].first["attributes"]["unit_price"]).to eq(12.00)
   end
 
-  # it 'can get a items items' do
-  #   item = create(:item)
-  #   item_1 = item.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: 1200)
-  #   item_2 = item.items.create(name: 'Barbie', description: 'Basic', unit_price: 2000)
-  #   item_3 = item.items.create(name: 'Scooter', description: 'Vroom', unit_price: 3500)
-  #
-  #   get "/api/v1/items/#{item.id}/items"
-  #
-  #   items = JSON.parse(response.body)
-  #
-  #   expect(response).to be_successful
-  #   expect(items["data"].length).to eq(3)
-  #   expect(items["data"].first["attributes"]["name"]).to eq('Teddy Bear')
-  #   expect(items["data"].first["attributes"]["description"]).to eq('Fluffy')
-  #   expect(items["data"].first["attributes"]["unit_price"]).to eq(12.00)
-  # end
+  it 'can get an items merchant' do
+    merchant = Merchant.create(name: 'ToysRUs')
+    item = merchant.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: 1500, created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    get "/api/v1/items/#{item.id}/merchant"
+
+    expect(response).to be_successful
+    merchant_response = JSON.parse(response.body)
+    expect(merchant_response["data"]["id"]).to eq("#{merchant.id}")
+  end
 end
