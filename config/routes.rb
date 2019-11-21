@@ -10,13 +10,14 @@ Rails.application.routes.draw do
         resources :invoices, only: [:index], module: :customers
         resources :transactions, only: [:index], module: :customers
       end
+      get '/merchants/most_revenue', to: 'merchants#top_merchants'
       get '/merchants/random', to: 'merchants#random'
       get '/merchants/find_all', to: 'merchants#find_all'
       get '/merchants/find', to: 'merchants#find'
       resources :merchants, only: [:index, :show] do
         resources :invoices, only: [:index], module: :merchants
         resources :items, only: [:index], module: :merchants
-      end 
+      end
     end
   end
 end

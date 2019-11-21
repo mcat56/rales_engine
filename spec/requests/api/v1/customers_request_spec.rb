@@ -34,7 +34,7 @@ describe 'Items API' do
     customer_response = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_1.first_name}")
+    expect(customer_response["data"]["attributes"]["first_name"]).to eq("#{customer_1.first_name}")
 
     #find by last_name
     get "/api/v1/customers/find?last_name=#{customer_2.last_name}"
@@ -42,7 +42,7 @@ describe 'Items API' do
     customer_response = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_2.first_name}")
+    expect(customer_response["data"]["attributes"]["first_name"]).to eq("#{customer_2.first_name}")
 
     #find by id
     get "/api/v1/customers/find?id=#{customer_3.id}"
@@ -50,14 +50,14 @@ describe 'Items API' do
     customer_response = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_3.first_name}")
+    expect(customer_response["data"]["attributes"]["first_name"]).to eq("#{customer_3.first_name}")
 
     #find by created_at
     get "/api/v1/customers/find?created_at=#{customer_1.created_at}"
 
     customer_response = JSON.parse(response.body)
     expect(response).to be_successful
-    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_1.first_name}")
+    expect(customer_response["data"]["attributes"]["first_name"]).to eq("#{customer_1.first_name}")
 
     #find by updated_at
     get "/api/v1/customers/find?updated_at=#{customer_2.updated_at}"
@@ -65,7 +65,7 @@ describe 'Items API' do
     customer_response = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(customer_response["data"].first["attributes"]["first_name"]).to eq("#{customer_2.first_name}")
+    expect(customer_response["data"]["attributes"]["first_name"]).to eq("#{customer_2.first_name}")
   end
 
   it 'can find all customers by any parameter' do
@@ -139,9 +139,9 @@ describe 'Items API' do
     invoice_2 = customer.invoices.create(merchant: merchant, status: 'shipped')
     invoice_3 = customer.invoices.create(merchant: merchant, status: 'shipped')
 
-    transaction_1 = invoice_1.transactions.create(credit_card_number: 4654405418249632, result: 'success')
-    transaction_2 = invoice_2.transactions.create(credit_card_number: 4515551623735607, result: 'success')
-    transaction_3 = invoice_3.transactions.create(credit_card_number: 4923661117104166, result: 'success')
+    transaction_1 = invoice_1.transactions.create(credit_card_number: '4654405418249632', result: 'success')
+    transaction_2 = invoice_2.transactions.create(credit_card_number: '4515551623735607', result: 'success')
+    transaction_3 = invoice_3.transactions.create(credit_card_number: '4923661117104166', result: 'success')
 
     get "/api/v1/customers/#{customer.id}/transactions"
 
@@ -149,7 +149,7 @@ describe 'Items API' do
 
     expect(response).to be_successful
     expect(transactions["data"].length).to eq(3)
-    expect(transactions["data"].first["attributes"]["last_four"]).to eq(9632)
+    expect(transactions["data"].first["attributes"]["credit_card_number"]).to eq('4654405418249632')
   end
 
   it 'can get a customers favorite merchant' do
@@ -164,12 +164,12 @@ describe 'Items API' do
     invoice_5 = customer.invoices.create(merchant: merchant_3, status: 'shipped')
     invoice_6 = customer.invoices.create(merchant: merchant_3, status: 'shipped')
 
-    transaction_1 = invoice_1.transactions.create(credit_card_number: 4654405418249632, result: 'success')
-    transaction_2 = invoice_2.transactions.create(credit_card_number: 4515551623735607, result: 'failure')
-    transaction_3 = invoice_3.transactions.create(credit_card_number: 4515551623735607, result: 'failure')
-    transaction_4 = invoice_4.transactions.create(credit_card_number: 4923661117104166, result: 'success')
-    transaction_5 = invoice_5.transactions.create(credit_card_number: 4003216997806204, result: 'success')
-    transaction_6 = invoice_6.transactions.create(credit_card_number: 4339360234330200, result: 'success')
+    transaction_1 = invoice_1.transactions.create(credit_card_number: '4654405418249632', result: 'success')
+    transaction_2 = invoice_2.transactions.create(credit_card_number: '4515551623735607', result: 'failure')
+    transaction_3 = invoice_3.transactions.create(credit_card_number: '4515551623735607', result: 'failure')
+    transaction_4 = invoice_4.transactions.create(credit_card_number: '4923661117104166', result: 'success')
+    transaction_5 = invoice_5.transactions.create(credit_card_number: '4003216997806204', result: 'success')
+    transaction_6 = invoice_6.transactions.create(credit_card_number: '4339360234330200', result: 'success')
 
     get "/api/v1/customers/#{customer.id}/favorite_merchant"
 

@@ -13,14 +13,13 @@ class Api::V1::CustomersController < ApplicationController
   end
 
   def find
-
-    customer = Customer.where("#{params.keys.first} = '#{params.values.first.gsub(/'/, '%')}'")
+    customer = Customer.where(customer_params).first
     serialized = CustomerSerializer.new(customer)
     render json: serialized
   end
 
   def find_all
-    customers = Customer.having("#{params.keys.first} = '#{params.values.first.gsub(/'/, '%')}'").group(:id)
+    customers = Customer.having(customer_params).group(:id)
     serialized = CustomerSerializer.new(customers)
     render json: serialized
   end
@@ -40,7 +39,29 @@ class Api::V1::CustomersController < ApplicationController
 
   private
 
-  def customers_params
-    params.require(:customer).permit(Customer.column_names)
+  def customer_params
+    if params['first_name']
+      params['first_name'].gsub(/'/, '%27')
+    end
+    if params['last_name']
+      params['last_name'].gsub(/'/, '%27')
+    end
+    params.permit(:id, :first_name, :last_name, :updated_at, :created_at)
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end

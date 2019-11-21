@@ -7,4 +7,8 @@ class Invoice < ActiveRecord::Base
   has_many :items, through: :invoice_items
 
   acts_as_copy_target
+
+  def total_revenue
+    binding.pry
+  end
 end

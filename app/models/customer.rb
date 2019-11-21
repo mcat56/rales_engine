@@ -3,7 +3,6 @@ class Customer < ActiveRecord::Base
   has_many :invoices
   has_many :transactions, through: :invoices
 
-
   acts_as_copy_target
 
 
@@ -12,5 +11,3 @@ class Customer < ActiveRecord::Base
   end
 
 end
-
-# invoices.joins(transactions: :merchants)
