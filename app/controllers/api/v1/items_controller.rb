@@ -30,6 +30,13 @@ class Api::V1::ItemsController < ApplicationController
     render json: serialized
   end
 
+  def top_items
+    count = params[:quantity]
+    top_items = Item.top_items(count)
+    serialized = ItemSerializer.new(top_items)
+    render json: serialized 
+  end
+
 
   private
 

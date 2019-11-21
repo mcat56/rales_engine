@@ -194,4 +194,41 @@ describe 'Items API' do
     merchant_response = JSON.parse(response.body)
     expect(merchant_response["data"]["id"]).to eq("#{merchant.id}")
   end
+
+  it 'can get top items by total revenue' do
+    customer = create(:customer)
+    merchant_1 = create(:merchant)
+    item_1 = merchant_1.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: '12.00')
+
+    merchant_2 = create(:merchant)
+    item_2 = merchant_2.items.create(name: 'Barbie', description: 'Basic', unit_price: '20.00')
+
+    merchant_3 = create(:merchant)
+    item_3 = merchant_3.items.create(name: 'Scooter', description: 'Vroom', unit_price: '35.00')
+
+    invoice_1 = customer.invoices.create(merchant: merchant_1, status: 'shipped')
+    invoice_item_1 = invoice_1.invoice_items.create(item: item_1, quantity: 4, unit_price: '12.00')
+
+    invoice_2 = customer.invoices.create(merchant: merchant_2, status: 'shipped')
+    invoice_item_2 = invoice_2.invoice_items.create(item: item_2, quantity: 3, unit_price: '20.00')
+
+    invoice_3 = customer.invoices.create(merchant: merchant_3, status: 'shipped')
+    invoice_item_3 = invoice_3.invoice_items.create(item: item_3, quantity: 1, unit_price: '35.00')
+
+    transaction_1 = invoice_1.transactions.create(credit_card_number: '4654405418249632', result: 'success')
+    transaction_2 = invoice_2.transactions.create(credit_card_number: '4515551623735607', result: 'success')
+    transaction_3 = invoice_3.transactions.create(credit_card_number: '4515551623735607', result: 'success')
+
+    get "/api/v1/items/most_revenue?quantity=2"
+    top_items = JSON.parse(response.body)
+    expect(response).to be_successful
+    expect(top_items["data"].first["attributes"]["name"]).to eq("#{item_2.name}")
+    expect(top_items["data"][1]["attributes"]["name"]).to eq("#{item_1.name}")
+    expect(top_items["data"].length).to eq(2)
+  end
+
+  it 'can get the date with the most sales for an item' do
+
+  end
+
 end
