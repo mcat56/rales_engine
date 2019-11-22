@@ -34,9 +34,15 @@ class Api::V1::ItemsController < ApplicationController
     count = params[:quantity]
     top_items = Item.top_items(count)
     serialized = ItemSerializer.new(top_items)
-    render json: serialized 
+    render json: serialized
   end
 
+  def best_day
+    item = Item.find(params[:item_id])
+    best_day = item.best_day
+    serialized = DatesFacade.new(best_day)
+    render json: serialized.data
+  end
 
   private
 

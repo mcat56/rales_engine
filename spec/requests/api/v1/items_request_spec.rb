@@ -216,19 +216,57 @@ describe 'Items API' do
     invoice_item_3 = invoice_3.invoice_items.create(item: item_3, quantity: 1, unit_price: '35.00')
 
     transaction_1 = invoice_1.transactions.create(credit_card_number: '4654405418249632', result: 'success')
-    transaction_2 = invoice_2.transactions.create(credit_card_number: '4515551623735607', result: 'success')
+    transaction_2 = invoice_2.transactions.create(credit_card_number: '4515551623735607', result: 'failure')
     transaction_3 = invoice_3.transactions.create(credit_card_number: '4515551623735607', result: 'success')
 
     get "/api/v1/items/most_revenue?quantity=2"
     top_items = JSON.parse(response.body)
     expect(response).to be_successful
-    expect(top_items["data"].first["attributes"]["name"]).to eq("#{item_2.name}")
-    expect(top_items["data"][1]["attributes"]["name"]).to eq("#{item_1.name}")
+    expect(top_items["data"].first["attributes"]["name"]).to eq("#{item_1.name}")
+    expect(top_items["data"][1]["attributes"]["name"]).to eq("#{item_3.name}")
     expect(top_items["data"].length).to eq(2)
   end
 
   it 'can get the date with the most sales for an item' do
+    customer_1 = create(:customer)
+    merchant_1 = create(:merchant)
+    item_1 = merchant_1.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: '12.00')
 
+    invoice_1 = customer_1.invoices.create(merchant: merchant_1, status: 'shipped', created_at: "2012-03-28 16:53:59 UTC", updated_at: "2012-03-28 16:53:59 UTC" )
+    invoice_item_1 = invoice_1.invoice_items.create(item: item_1, quantity: 2, unit_price: '12.00', created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+
+    invoice_2 = customer_1.invoices.create(merchant: merchant_1, status: 'shipped', created_at: "2012-03-28 12:53:59 UTC", updated_at: "2012-03-28 12:53:59 UTC" )
+    invoice_item_2 = invoice_2.invoice_items.create(item: item_1, quantity: 2, unit_price: '12.00', created_at: "2012-03-28 12:53:59 UTC", updated_at: "2012-03-28 12:53:59 UTC" )
+
+    invoice_3 = customer_1.invoices.create(merchant: merchant_1, status: 'shipped', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    invoice_item_3 = invoice_3.invoice_items.create(item: item_1, quantity: 1, unit_price: '12.00', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    invoice_4 = customer_1.invoices.create(merchant: merchant_1, status: 'shipped', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    invoice_item_4 = invoice_4.invoice_items.create(item: item_1, quantity: 1, unit_price: '12.00', created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+
+    invoice_5 = customer_1.invoices.create(merchant: merchant_1, status: 'shipped', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    invoice_item_5 = invoice_5.invoice_items.create(item: item_1, quantity: 4, unit_price: '12.00', created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+
+    invoice_6 = customer_1.invoices.create(merchant: merchant_1, status: 'shipped', created_at: "2012-03-30 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    invoice_item_6 = invoice_6.invoice_items.create(item: item_1, quantity: 5, unit_price: '12.00', created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+
+    invoice_7 = customer_1.invoices.create(merchant: merchant_1, status: 'shipped', created_at: "2012-03-30 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    invoice_item_7 = invoice_7.invoice_items.create(item: item_1, quantity: 1, unit_price: '12.00', created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+
+    transaction_1 = invoice_1.transactions.create(credit_card_number: '4654405418249632', result: 'success', created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    transaction_2 = invoice_2.transactions.create(credit_card_number: '4515551623735607', result: 'success', created_at: "2012-03-28 12:53:59 UTC", updated_at: "2012-03-28 12:53:59 UTC" )
+    transaction_3 = invoice_3.transactions.create(credit_card_number: '4515551623735607', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    transaction_4 = invoice_4.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    transaction_5 = invoice_5.transactions.create(credit_card_number: '4654405418249632', result: 'success', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    transaction_6 = invoice_6.transactions.create(credit_card_number: '4654405418249632', result: 'success', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    transaction_7 = invoice_7.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    get "/api/v1/items/#{item_1.id}/best_day"
+
+    expect(response).to be_successful
+    best_day = JSON.parse(response.body)
+
+    expect(best_day["data"]["attributes"]["best_day"]).to eq('2012-03-30')
   end
 
 end

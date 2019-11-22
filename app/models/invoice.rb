@@ -8,7 +8,4 @@ class Invoice < ActiveRecord::Base
 
   acts_as_copy_target
 
-  def total_revenue
-    binding.pry
-  end
 end
