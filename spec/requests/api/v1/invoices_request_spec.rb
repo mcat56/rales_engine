@@ -161,6 +161,93 @@ describe 'Invoices API' do
     invoices = Invoice.all.pluck(:id)
     invoice = JSON.parse(response.body)
     expect(invoices).to include(invoice["data"]["id"].to_i)
+  end
 
+  it 'can get an invoices merchant' do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    invoice = merchant.invoices.create(customer: customer, status: 'shipped', created_at: "2012-03-22 14:53:59 UTC", updated_at: "2012-03-22 14:53:59 UTC")
+
+    get "/api/v1/invoices/#{invoice.id}/merchant"
+
+    expect(response).to be_successful
+    merchant_response = JSON.parse(response.body)
+    expect(merchant_response["data"]["id"]).to eq("#{merchant.id}")
+  end
+
+  it 'can get an invoices customer' do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    invoice = merchant.invoices.create(customer: customer, status: 'shipped', created_at: "2012-03-22 14:53:59 UTC", updated_at: "2012-03-22 14:53:59 UTC")
+
+    get "/api/v1/invoices/#{invoice.id}/customer"
+
+    expect(response).to be_successful
+    customer_response = JSON.parse(response.body)
+    expect(customer_response["data"]["id"]).to eq("#{customer.id}")
+  end
+
+  it 'can get an invoices invoice_items' do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    invoice = merchant.invoices.create(customer: customer, status: 'shipped', created_at: "2012-03-22 14:53:59 UTC", updated_at: "2012-03-22 14:53:59 UTC")
+
+    item_1 = merchant.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: '12.00')
+    item_2 = merchant.items.create(name: 'Barbie', description: 'Basic', unit_price: '20.00')
+    item_3 = merchant.items.create(name: 'Scooter', description: 'Vroom', unit_price: '35.00')
+
+    invoice_1 = customer.invoices.create(merchant: merchant, status: 'shipped')
+    invoice_item_1 = invoice.invoice_items.create(item: item_1, quantity: 4, unit_price: '12.00')
+    invoice_item_2 = invoice.invoice_items.create(item: item_2, quantity: 3, unit_price: '20.00')
+    invoice_item_3 = invoice.invoice_items.create(item: item_3, quantity: 1, unit_price: '35.00')
+
+    get "/api/v1/invoices/#{invoice.id}/invoice_items"
+
+    expect(response).to be_successful
+    invoice_items = JSON.parse(response.body)
+    expect(invoice_items["data"].length).to eq(3)
+    expect(invoice_items["data"].first["id"]).to eq("#{invoice_item_1.id}")
+  end
+
+  it 'can get an invoices transactions' do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    invoice = merchant.invoices.create(customer: customer, status: 'shipped', created_at: "2012-03-22 14:53:59 UTC", updated_at: "2012-03-22 14:53:59 UTC")
+
+    transaction_1 = invoice.transactions.create(credit_card_number: '4654405418249632', result: 'success')
+    transaction_2 = invoice.transactions.create(credit_card_number: '4515551623735607', result: 'failure')
+    transaction_3 = invoice.transactions.create(credit_card_number: '4515551623735607', result: 'failure')
+    transaction_4 = invoice.transactions.create(credit_card_number: '4923661117104166', result: 'success')
+    transaction_5 = invoice.transactions.create(credit_card_number: '4003216997806204', result: 'success')
+    transaction_6 = invoice.transactions.create(credit_card_number: '4339360234330200', result: 'success')
+
+    get "/api/v1/invoices/#{invoice.id}/transactions"
+
+    expect(response).to be_successful
+    invoice_items = JSON.parse(response.body)
+    expect(invoice_items["data"].length).to eq(6)
+    expect(invoice_items["data"].first["id"]).to eq("#{transaction_1.id}")
+  end
+
+  it 'can get an invoices items' do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    invoice = merchant.invoices.create(customer: customer, status: 'shipped', created_at: "2012-03-22 14:53:59 UTC", updated_at: "2012-03-22 14:53:59 UTC")
+
+    item_1 = merchant.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: '12.00')
+    item_2 = merchant.items.create(name: 'Barbie', description: 'Basic', unit_price: '20.00')
+    item_3 = merchant.items.create(name: 'Scooter', description: 'Vroom', unit_price: '35.00')
+
+    invoice_1 = customer.invoices.create(merchant: merchant, status: 'shipped')
+    invoice_item_1 = invoice.invoice_items.create(item: item_1, quantity: 4, unit_price: '12.00')
+    invoice_item_2 = invoice.invoice_items.create(item: item_2, quantity: 3, unit_price: '20.00')
+    invoice_item_3 = invoice.invoice_items.create(item: item_3, quantity: 1, unit_price: '35.00')
+
+    get "/api/v1/invoices/#{invoice.id}/items"
+
+    expect(response).to be_successful
+    invoice_items = JSON.parse(response.body)
+    expect(invoice_items["data"].length).to eq(3)
+    expect(invoice_items["data"].first["id"]).to eq("#{item_1.id}")
   end
 end
