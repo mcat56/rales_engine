@@ -105,14 +105,20 @@ describe 'Merchants API' do
   end
 
   it 'can select a random merchant' do
-    merchant = Merchant.create(name: 'Thai Tanic')
+    merchant_0 = Merchant.create(name: 'Thai Tanic')
+    merchant_1 = Merchant.create(name: 'ToysRUs', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC")
+    merchant_2 = Merchant.create(name: 'REI', created_at: "2014-03-29 14:53:59 UTC", updated_at: "2014-03-29 14:53:59 UTC")
+    merchant_3 = Merchant.create(name: 'Barnes&Noble', created_at: "2016-03-29 14:53:59 UTC", updated_at: "2016-03-29 14:53:59 UTC")
+
 
     get '/api/v1/merchants/random'
 
     expect(response).to be_successful
 
+    expect(response).to be_successful
+    merchants = Merchant.all.pluck(:id)
     merchant = JSON.parse(response.body)
-    expect(merchant["data"]["attributes"]["name"]).to eq('Thai Tanic')
+    expect(merchants).to include(merchant["data"]["id"].to_i)
   end
 
   it 'can get a merchants invoices' do
