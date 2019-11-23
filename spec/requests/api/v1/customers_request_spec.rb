@@ -1,6 +1,6 @@
 require 'rails_helper'
 # do sad paths / find / find_all errors
-describe 'Items API' do
+describe 'Customers API' do
   it 'sends a list of customers' do
     create_list(:customer, 3)
 

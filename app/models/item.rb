@@ -7,7 +7,11 @@ class Item < ActiveRecord::Base
 
   acts_as_copy_target
 
-  def self.most_revenue(quantity)
-    joins(invoices: :transactions).select("items.*, sum(invoice_items.unit_price * invoice_items.quantity) as total_revenue").merge(Transaction.successful).group(:id).order("total_revenue desc").limit(quantity)
+  def self.top_items(quantity)
+    Item.joins(invoices: :transactions).select("items.*, sum(invoice_items.unit_price * invoice_items.quantity) as total_revenue").merge(Transaction.successful).group(:id).order("total_revenue desc").limit(quantity)
+  end
+
+  def best_day
+    invoices.joins(:transactions).select("invoices.*, sum(invoice_items.quantity) as total").merge(Transaction.successful).group("DATE_TRUNC('day', invoices.created_at), invoices.id").order("total desc, invoices.created_at desc").limit(1).first.created_at
   end
 end

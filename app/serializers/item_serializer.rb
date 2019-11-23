@@ -3,10 +3,10 @@ class ItemSerializer
 
   attributes :id, :name, :description, :merchant_id
   attribute :unit_price do |item|
-    item.unit_price * 0.01
+    '%.2f' % (item.unit_price)
   end
 
-  belongs_to :merchant
-  has_many :invoice_items
+  # belongs_to :merchant
+  # has_many :invoice_items
 
 end

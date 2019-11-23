@@ -20,6 +20,25 @@ Rails.application.routes.draw do
         resources :invoices, only: [:index], module: :merchants
         resources :items, only: [:index], module: :merchants
       end
+      get '/items/:item_id/best_day', to: 'items#best_day'
+      get '/items/most_revenue', to: 'items#top_items'
+      get '/items/:item_id/merchant', to: 'items/merchants#show'
+      get '/items/find', to: 'items#find'
+      get '/items/find_all', to: 'items#find_all'
+      get '/items/random', to: 'items#random'
+      resources :items, only: [:index, :show] do
+        resources :invoice_items, only: [:index], module: :items
+      end
+      get '/invoices/:id/customer', to: 'invoices/customers#show'
+      get '/invoices/:id/merchant', to: 'invoices/merchants#show'
+      get '/invoices/random', to: 'invoices#random'
+      get '/invoices/find', to: 'invoices#find'
+      get '/invoices/find_all', to:'invoices#find_all'
+      resources :invoices, only: [:index, :show] do
+        resources :invoice_items, only: [:index], module: :invoices
+        resources :items, only: [:index], module: :invoices
+        resources :transactions, only: [:index], module: :invoices
+      end
     end
   end
 end
