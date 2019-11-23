@@ -12,6 +12,6 @@ class Item < ActiveRecord::Base
   end
 
   def best_day
-    invoices.joins(:transactions).select("invoices.*, sum(invoice_items.unit_price * invoice_items.quantity) as total_revenue").merge(Transaction.successful).group("DATE_TRUNC('day', invoices.created_at), invoices.id").order("total_revenue desc").limit(1).first.created_at
+    invoices.joins(:transactions).select("invoices.*, sum(invoice_items.quantity) as total").merge(Transaction.successful).group("DATE_TRUNC('day', invoices.created_at), invoices.id").order("total desc, invoices.created_at desc").limit(1).first.created_at
   end
 end
