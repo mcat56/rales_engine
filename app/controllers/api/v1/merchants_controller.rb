@@ -49,6 +49,13 @@ class Api::V1::MerchantsController < ApplicationController
     render json: serialized
   end
 
+  def customers_with_pending_invoices
+    merchant = Merchant.find(params[:id])
+    customers = merchant.customers_with_pending_invoices
+    serialized = CustomerSerializer.new(customers)
+    render json: serialized
+  end
+
   private
 
   def merchant_params

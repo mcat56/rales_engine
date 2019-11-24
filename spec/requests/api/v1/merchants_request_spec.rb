@@ -261,4 +261,65 @@ describe 'Merchants API' do
     customer = JSON.parse(response.body)
     expect(customer["data"]["attributes"]["first_name"]).to eq("#{customer_1.first_name}")
   end
+
+  it 'can return customers with pending invoices' do
+    customer_1 = create(:customer)
+    customer_2 = create(:customer)
+    customer_3 = create(:customer)
+    customer_4 = create(:customer)
+    customer_5 = create(:customer)
+    customer_6 = create(:customer)
+    merchant = create(:merchant)
+    item = merchant.items.create(name: 'Teddy Bear', description: 'Fluffy', unit_price: '12.00')
+
+    invoice_1 = customer_1.invoices.create(merchant: merchant, status: 'shipped', created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    invoice_item_1 = invoice_1.invoice_items.create(item: item, quantity: 1, unit_price: '12.00', created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+
+    invoice_2 = customer_2.invoices.create(merchant: merchant, status: 'shipped', created_at: "2012-03-28 12:53:59 UTC", updated_at: "2012-03-28 12:53:59 UTC" )
+    invoice_item_2 = invoice_2.invoice_items.create(item: item, quantity: 3, unit_price: '12.00', created_at: "2012-03-28 12:53:59 UTC", updated_at: "2012-03-28 12:53:59 UTC" )
+
+    invoice_3 = customer_3.invoices.create(merchant: merchant, status: 'shipped', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    invoice_item_3 = invoice_3.invoice_items.create(item: item, quantity: 4, unit_price: '12.00', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    invoice_4 = customer_4.invoices.create(merchant: merchant, status: 'shipped', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    invoice_item_4 = invoice_4.invoice_items.create(item: item, quantity: 4, unit_price: '12.00', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    invoice_5 = customer_5.invoices.create(merchant: merchant, status: 'shipped', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    invoice_item_5 = invoice_5.invoice_items.create(item: item, quantity: 4, unit_price: '12.00', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    invoice_6 = customer_6.invoices.create(merchant: merchant, status: 'shipped', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    invoice_item_6 = invoice_6.invoice_items.create(item: item, quantity: 4, unit_price: '12.00', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+
+    transaction_1 = invoice_1.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-28 14:53:59 UTC", updated_at: "2012-03-28 14:53:59 UTC" )
+    transaction_2 = invoice_1.transactions.create(credit_card_number: '4515551623735607', result: 'failure', created_at: "2012-03-28 12:53:59 UTC", updated_at: "2012-03-28 12:53:59 UTC" )
+    transaction_3 = invoice_1.transactions.create(credit_card_number: '4515551623735607', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    transaction_4 = invoice_2.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    transaction_5 = invoice_2.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    transaction_6 = invoice_3.transactions.create(credit_card_number: '4654405418249632', result: 'success', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    transaction_7 = invoice_3.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    transaction_8 = invoice_4.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    transaction_9 = invoice_4.transactions.create(credit_card_number: '4654405418249632', result: 'success', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    transaction_10 = invoice_5.transactions.create(credit_card_number: '4654405418249632', result: 'success', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    transaction_11 = invoice_5.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+    transaction_12 = invoice_6.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+    transaction_13 = invoice_6.transactions.create(credit_card_number: '4654405418249632', result: 'failure', created_at: "2012-03-29 14:53:59 UTC", updated_at: "2012-03-29 14:53:59 UTC" )
+
+
+
+    get "/api/v1/merchants/#{merchant.id}/customers_with_pending_invoices"
+
+    expect(response).to be_successful
+
+    customers = JSON.parse(response.body)
+    expect(customers["data"].length).to eq(3)
+    expect(customers["data"].first["attributes"]["id"]).to eq(customer_1.id)
+    expect(customers["data"][1]["attributes"]["id"]).to eq(customer_2.id)
+    expect(customers["data"][2]["attributes"]["id"]).to eq(customer_6.id)
+  end
 end
