@@ -1,18 +1,18 @@
 # Rales Engine
 
-###Summary
+### Summary
 Rales Engine is a JSON API that exposes date for 6 database tables: Items, Merchants, Invoices, Invoice Items, Customers, and Transactions. 
 
-###Configuration
+### Configuration
 Ruby Version 2.5.0
 Bundle
 Run test through RSPEC Suite : Command: rspec
 Run imports through rake : Command: rake import:import_data
 
-###Endpoints
+### Endpoints
 The Rales Engine API Exposes Record, Relationship and Business Intelligence Endpoints. All endpoints currently sit in Api::V1
 
-####_Record EndPoints_
+#### _Record EndPoints_
 Each resource has available the following Record Endpoints:
 For the following I will use merchants as an example resource, though the same applies for items, invoices, invoice_items, transactions and customers:
 
@@ -22,35 +22,35 @@ For the following I will use merchants as an example resource, though the same a
 *'/api/v1/merchants/find_all'
 *'/api/v1/merchants/random'
 
-####_Relationship Endpoints are as Follows:_
+#### _Relationship Endpoints are as Follows:_
 
 _Customers_
-*'/api/v1/customers/:id/invoices'
-*'/api/v1/customers/:id/transactions'
+* '/api/v1/customers/:id/invoices'
+* '/api/v1/customers/:id/transactions'
 
 _Merchants_
-*'/api/v1/merchants/:id/invoices'
-*'/api/v1/merchants/:id/items'
+* '/api/v1/merchants/:id/invoices'
+* '/api/v1/merchants/:id/items'
 
 _Items_
-*'/api/v1/items/:id/invoice_items'
-*'/api/v1/items/:id/merchant'
+* '/api/v1/items/:id/invoice_items'
+* '/api/v1/items/:id/merchant'
 
 _Invoices_
-*'/api/v1/invoices/:id/customer'
-*'/api/v1/invoices/:id/merchant'
-*'/api/v1/invoices/:id/invoice_items'
-*'/api/v1/invoices/:id/items'
-*'/api/v1/invoices/:id/transactions'
+* '/api/v1/invoices/:id/customer'
+* '/api/v1/invoices/:id/merchant'
+* '/api/v1/invoices/:id/invoice_items'
+* '/api/v1/invoices/:id/items'
+* '/api/v1/invoices/:id/transactions'
 
 _Invoice Items_
-*'/api/v1/invoice_items/:id/invoice'
-*'/api/v1/invoice_items/:id/item'
+* '/api/v1/invoice_items/:id/invoice'
+* '/api/v1/invoice_items/:id/item'
 
 _Transactions_
-*'/api/v1/transactions/:id/invoice
+* '/api/v1/transactions/:id/invoice
 
-####_Buiness Intelligence Endpoints_
+#### _Buiness Intelligence Endpoints_
 
 _Merchants_
 
