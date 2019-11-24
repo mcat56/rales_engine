@@ -3,7 +3,7 @@
 ### Summary
 Rales Engine is a JSON API that exposes date for 6 database tables: Items, Merchants, Invoices, Invoice Items, Customers, and Transactions. 
 
-[Imgur](https://i.imgur.com/GwYjny2.png)
+![Imgur](https://i.imgur.com/GwYjny2.png)
 
 
 ### Configuration
