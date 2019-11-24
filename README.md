@@ -12,15 +12,15 @@ Run imports through rake : Command: rake import:import_data
 ### Endpoints
 The Rales Engine API Exposes Record, Relationship and Business Intelligence Endpoints. All endpoints currently sit in Api::V1
 
-#### _Record EndPoints_
+#### __Record EndPoints__
 Each resource has available the following Record Endpoints:
 For the following I will use merchants as an example resource, though the same applies for items, invoices, invoice_items, transactions and customers:
 
-*'/api/v1/merchants'
-*'/api/v1/merchants/:id'
-*'api/v1/merchants/find
-*'/api/v1/merchants/find_all'
-*'/api/v1/merchants/random'
+* '/api/v1/merchants'
+* '/api/v1/merchants/:id'
+* 'api/v1/merchants/find
+* '/api/v1/merchants/find_all'
+* '/api/v1/merchants/random'
 
 #### _Relationship Endpoints are as Follows:_
 
