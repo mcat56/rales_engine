@@ -79,3 +79,11 @@ __Customers__
 For the merchant with which the customer has conducted the most successful transactions:
 * '/api/v1/customers/:id/favorite_merchant'
 
+
+
+
+### EndPoint Returns
+
+
+
+
