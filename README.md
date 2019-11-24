@@ -87,27 +87,27 @@ For the merchant with which the customer has conducted the most successful trans
 
 __Customers__
 
-⋅⋅⋅ {"data":{"id":"1","type":"customer","attributes":{"id":1,"first_name":"Joey","last_name":"Ondricka"}}}
+⋅⋅ {"data":{"id":"1","type":"customer","attributes":{"id":1,"first_name":"Joey","last_name":"Ondricka"}}}
 
 __Merchants__ 
 
-⋅⋅⋅ {"data":{"id":"1","type":"merchant","attributes":{"id":1,"name":"Schroeder-Jerde"}}}
+⋅⋅ {"data":{"id":"1","type":"merchant","attributes":{"id":1,"name":"Schroeder-Jerde"}}}
 
 __Items__
 
-⋅⋅⋅ {"data":{"id":"1","type":"item","attributes":{"id":1,"name":"Item Qui Esse","description":"Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro.","merchant_id":1,"unit_price":"751.07"}}}
+⋅⋅ {"data":{"id":"1","type":"item","attributes":{"id":1,"name":"Item Qui Esse","description":"Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro.","merchant_id":1,"unit_price":"751.07"}}}
 
 __Invoices__
 
-⋅⋅⋅ {"data":{"id":"1","type":"invoice","attributes":{"id":1,"status":"shipped","merchant_id":26,"customer_id":1}}} 
+⋅⋅ {"data":{"id":"1","type":"invoice","attributes":{"id":1,"status":"shipped","merchant_id":26,"customer_id":1}}} 
 
 __Invoice Items__
 
-⋅⋅⋅ {"data":{"id":"1","type":"invoice_item","attributes":{"id":1,"quantity":5,"invoice_id":1,"item_id":539,"unit_price":"136.35"}}} 
+⋅⋅ {"data":{"id":"1","type":"invoice_item","attributes":{"id":1,"quantity":5,"invoice_id":1,"item_id":539,"unit_price":"136.35"}}} 
 
 __Transactions__
  
-⋅⋅⋅ {"data":{"id":"1","type":"transaction","attributes":{"id":1,"result":"success","invoice_id":1,"credit_card_number":"4654405418249632"}}} 
+⋅⋅ {"data":{"id":"1","type":"transaction","attributes":{"id":1,"result":"success","invoice_id":1,"credit_card_number":"4654405418249632"}}} 
 
 
 
