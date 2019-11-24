@@ -19,4 +19,8 @@ class Merchant < ActiveRecord::Base
   def favorite_customer
     Customer.joins(:transactions).where("merchant_id = #{self.id}").merge(Transaction.successful).select("customers.*, count(transactions.*)").group('customers.id').order('count desc').limit(1).first
   end
+
+  def customers_with_pending_invoices
+    Customer.find_by_sql("SELECT customers.* FROM customers inner join invoices on invoices.customer_id = customers.id where invoices.merchant_id = #{self.id} except all select customers.* FROM customers inner join invoices on customers.id = invoices.customer_id inner join transactions on invoices.id = transactions.invoice_id where invoices.merchant_id = #{self.id}  and transactions.result = 'success' group by invoices.id, customers.id having count(transactions.*) >= 1")
+  end
 end
