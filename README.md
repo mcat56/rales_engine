@@ -24,35 +24,35 @@ For the following I will use merchants as an example resource, though the same a
 
 #### __Relationship Endpoints are as Follows:__
 
-!Customers!
+__Customers__
 * '/api/v1/customers/:id/invoices'
 * '/api/v1/customers/:id/transactions'
 
-!Merchants!
+__Merchants__
 * '/api/v1/merchants/:id/invoices'
 * '/api/v1/merchants/:id/items'
 
-!Items!
+__Items__
 * '/api/v1/items/:id/invoice_items'
 * '/api/v1/items/:id/merchant'
 
-!Invoices!
+__Invoices__
 * '/api/v1/invoices/:id/customer'
 * '/api/v1/invoices/:id/merchant'
 * '/api/v1/invoices/:id/invoice_items'
 * '/api/v1/invoices/:id/items'
 * '/api/v1/invoices/:id/transactions'
 
-!Invoice Items!
+__Invoice Items__
 * '/api/v1/invoice_items/:id/invoice'
 * '/api/v1/invoice_items/:id/item'
 
-!Transactions!
+__Transactions__
 * '/api/v1/transactions/:id/invoice
 
 #### __Buiness Intelligence Endpoints__
 
-!Merchants!
+__Merchants__
 
 For the top X merchants ranked by total revenue: 
 * '/api/v1/merchants/most_revenue?quantity=X'
@@ -66,7 +66,7 @@ For the customer with the greatest total number of successful transactions in as
 For the customers who still having pending invoices (no successful transactions to date):
 * '/api/v1/merchants/:id/customers_with_pending_invoices'
 
-!Item!
+__Item__
 
 For the top X items ranked by total revenue:
 * '/api/v1/items/most_revenue?quantity=X'
@@ -74,7 +74,7 @@ For the top X items ranked by total revenue:
 For the date with the most sales for an item (if multiple days have the same number of sales return the most recent date):
 * '/api/v1/items/:id/best_day'
 
-!Customers!
+__Customers__
 
 For the merchant with which the customer has conducted the most successful transactions:
 * '/api/v1/customers/:id/favorite_merchant'
