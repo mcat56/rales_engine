@@ -316,10 +316,12 @@ describe 'Merchants API' do
 
     expect(response).to be_successful
 
+    ids = [customer_1.id, customer_2.id, customer_6.id]
+
     customers = JSON.parse(response.body)
     expect(customers["data"].length).to eq(3)
-    expect(customers["data"].first["attributes"]["id"]).to eq(customer_1.id)
-    expect(customers["data"][1]["attributes"]["id"]).to eq(customer_2.id)
-    expect(customers["data"][2]["attributes"]["id"]).to eq(customer_6.id)
+    expect(ids).to include(customers["data"].first["attributes"]["id"])
+    expect(ids).to include(customers["data"][1]["attributes"]["id"])
+    expect(ids).to include(customers["data"][2]["attributes"]["id"])
   end
 end
