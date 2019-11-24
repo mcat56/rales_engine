@@ -4,10 +4,10 @@
 Rales Engine is a JSON API that exposes date for 6 database tables: Items, Merchants, Invoices, Invoice Items, Customers, and Transactions. 
 
 ### Configuration
-Ruby Version 2.5.0
-Bundle
-Run test through RSPEC Suite : Command: rspec
-Run imports through rake : Command: rake import:import_data
++ Ruby Version 2.5.0
++ Bundle
++ Run test through RSPEC Suite : Command: rspec
++ Run imports through rake : Command: rake import:import_data
 
 ### Endpoints
 The Rales Engine API Exposes Record, Relationship and Business Intelligence Endpoints. All endpoints currently sit in Api::V1
@@ -52,30 +52,30 @@ _Transactions_
 
 #### _Buiness Intelligence Endpoints_
 
-_Merchants_
+__Merchants__
 
 For the top X merchants ranked by total revenue: 
-'/api/v1/merchants/most_revenue?quantity=X'
+* '/api/v1/merchants/most_revenue?quantity=X'
 
 For the date with the greatest total revenue for all merchants:
-'/api/v1/merchants/revenue?date=YYYY-MM-DD'
+* '/api/v1/merchants/revenue?date=YYYY-MM-DD'
 
 For the customer with the greatest total number of successful transactions in association with a merchant:
-'/api/v1/merchants/:id/favorite_customer
+* '/api/v1/merchants/:id/favorite_customer
 
 For the customers who still having pending invoices (no successful transactions to date):
-'/api/v1/merchants/:id/customers_with_pending_invoices'
+* '/api/v1/merchants/:id/customers_with_pending_invoices'
 
 _Items_
 
 For the top X items ranked by total revenue:
-'/api/v1/items/most_revenue?quantity=X'
+* '/api/v1/items/most_revenue?quantity=X'
 
 For the date with the most sales for an item (if multiple days have the same number of sales return the most recent date):
-'/api/v1/items/:id/best_day'
+* '/api/v1/items/:id/best_day'
 
-_Customers_
+__Customers__
 
 For the merchant with which the customer has conducted the most successful transactions:
-'/api/v1/customers/:id/favorite_merchant'
+* '/api/v1/customers/:id/favorite_merchant'
 
