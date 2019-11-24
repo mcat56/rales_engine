@@ -87,7 +87,7 @@ For the merchant with which the customer has conducted the most successful trans
 
 __Customers__
 
-    {
+{
   "data": {
     "id": "1",
     "type": "customer",
