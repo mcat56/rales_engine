@@ -87,7 +87,17 @@ For the merchant with which the customer has conducted the most successful trans
 
 __Customers__
 
-{"data":{"id":"1","type":"customer","attributes":{"id":1,"first_name":"Joey","last_name":"Ondricka"}}}
+    {
+  "data": {
+    "id": "1",
+    "type": "customer",
+    "attributes": {
+      "id": 1,
+      "first_name": "Joey",
+      "last_name": "Ondricka"
+    }
+  }
+}
 
 __Merchants__ 
 
