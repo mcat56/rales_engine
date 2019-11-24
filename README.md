@@ -22,37 +22,37 @@ For the following I will use merchants as an example resource, though the same a
 * '/api/v1/merchants/find_all'
 * '/api/v1/merchants/random'
 
-#### _Relationship Endpoints are as Follows:_
+#### __Relationship Endpoints are as Follows:__
 
-_Customers_
+!Customers!
 * '/api/v1/customers/:id/invoices'
 * '/api/v1/customers/:id/transactions'
 
-_Merchants_
+!Merchants!
 * '/api/v1/merchants/:id/invoices'
 * '/api/v1/merchants/:id/items'
 
-_Items_
+!Items!
 * '/api/v1/items/:id/invoice_items'
 * '/api/v1/items/:id/merchant'
 
-_Invoices_
+!Invoices!
 * '/api/v1/invoices/:id/customer'
 * '/api/v1/invoices/:id/merchant'
 * '/api/v1/invoices/:id/invoice_items'
 * '/api/v1/invoices/:id/items'
 * '/api/v1/invoices/:id/transactions'
 
-_Invoice Items_
+!Invoice Items!
 * '/api/v1/invoice_items/:id/invoice'
 * '/api/v1/invoice_items/:id/item'
 
-_Transactions_
+!Transactions!
 * '/api/v1/transactions/:id/invoice
 
-#### _Buiness Intelligence Endpoints_
+#### __Buiness Intelligence Endpoints__
 
-__Merchants__
+!Merchants!
 
 For the top X merchants ranked by total revenue: 
 * '/api/v1/merchants/most_revenue?quantity=X'
@@ -66,7 +66,7 @@ For the customer with the greatest total number of successful transactions in as
 For the customers who still having pending invoices (no successful transactions to date):
 * '/api/v1/merchants/:id/customers_with_pending_invoices'
 
-_Items_
+!Item!
 
 For the top X items ranked by total revenue:
 * '/api/v1/items/most_revenue?quantity=X'
@@ -74,7 +74,7 @@ For the top X items ranked by total revenue:
 For the date with the most sales for an item (if multiple days have the same number of sales return the most recent date):
 * '/api/v1/items/:id/best_day'
 
-__Customers__
+!Customers!
 
 For the merchant with which the customer has conducted the most successful transactions:
 * '/api/v1/customers/:id/favorite_merchant'
