@@ -10,7 +10,7 @@ Rales Engine is a JSON API that exposes sales data for 6 database tables: Items,
 + Clone this repo
 + Ruby Version 2.5.0
 + $ bundle
-+ Testing: $bundle exec rspec
++ Testing: $ bundle exec rspec
 + Run imports through rake: $ rake_import:import_data
 + Postgres dependent
 
