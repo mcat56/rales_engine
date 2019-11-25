@@ -1,16 +1,18 @@
 # Rales Engine
 
 ### Summary
-Rales Engine is a JSON API that exposes date for 6 database tables: Items, Merchants, Invoices, Invoice Items, Customers, and Transactions. 
+Rales Engine is a JSON API that exposes sales data for 6 database tables: Items, Merchants, Invoices, Invoice Items, Customers, and Transactions. 
 
 ![Imgur](https://i.imgur.com/GwYjny2.png)
 
 
-### Configuration
+### SetUp
++ Clone this repo
 + Ruby Version 2.5.0
-+ Bundle
-+ Run test through RSPEC Suite : Command: rspec
-+ Run imports through rake : Command: rake import:import_data
++ $ bundle
++ Testing: $bundle exec rspec
++ Run imports through rake: $rake_import:import_data
++ Postgres dependent
 
 ### Endpoints
 The Rales Engine API Exposes Record, Relationship and Business Intelligence Endpoints. All endpoints currently sit in Api::V1
