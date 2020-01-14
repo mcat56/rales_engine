@@ -3,7 +3,7 @@
 ### Summary
 Rales Engine is a JSON API that exposes sales data for 6 database tables: Items, Merchants, Invoices, Invoice Items, Customers, and Transactions. 
 
-![Imgur](https://imgur.com/P27GSN9)
+![Imgur](https://i.imgur.com/P27GSN9.png)
 
 
 ### SetUp
